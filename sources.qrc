@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/iamge">
+        <file>icon/back.png</file>
+        <file>icon/filePath.png</file>
+        <file>icon/next.png</file>
+        <file>icon/pause.png</file>
+        <file>icon/play.png</file>
+        <file>icon/stop.png</file>
+        <file>icon/volumeMute.png</file>
+        <file>icon/volumePlay.png</file>
+        <file>icon/fullscreen.png</file>
+    </qresource>
+</RCC>

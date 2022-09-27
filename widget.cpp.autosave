@@ -37,7 +37,7 @@ Widget::Widget(QWidget *parent) :
     ui->m_playerWidget->setFocusPolicy(Qt::ClickFocus);
 
     //进度条
-    m_SliderHover
+    
 }
 
 Widget::~Widget()
