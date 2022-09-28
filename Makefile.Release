@@ -107,6 +107,7 @@ release/qrc_sources.cpp: sources.qrc \
 		icon/filePath.png \
 		icon/volumeMute.png \
 		icon/volumePlay.png \
+		icon/fullscreen.png \
 		icon/pause.png
 	E:\QT\5.9\mingw53_32\bin\rcc.exe -name sources sources.qrc -o release\qrc_sources.cpp
 
@@ -248,6 +249,11 @@ release/moc_widget.cpp: ../../QT/5.9/mingw53_32/include/QtWidgets/QWidget \
 		../../QT/5.9/mingw53_32/include/QtGui/QResizeEvent \
 		../../QT/5.9/mingw53_32/include/QtGui/QMouseEvent \
 		../../QT/5.9/mingw53_32/include/QtGui/QKeyEvent \
+		../../QT/5.9/mingw53_32/include/QtWidgets/QFileDialog \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qfiledialog.h \
+		../../QT/5.9/mingw53_32/include/QtCore/qdir.h \
+		../../QT/5.9/mingw53_32/include/QtCore/qfileinfo.h \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qdialog.h \
 		widget.h \
 		release/moc_predefs.h \
 		../../QT/5.9/mingw53_32/bin/moc.exe
@@ -404,6 +410,11 @@ release/main.o: main.cpp widget.h \
 		../../QT/5.9/mingw53_32/include/QtGui/QResizeEvent \
 		../../QT/5.9/mingw53_32/include/QtGui/QMouseEvent \
 		../../QT/5.9/mingw53_32/include/QtGui/QKeyEvent \
+		../../QT/5.9/mingw53_32/include/QtWidgets/QFileDialog \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qfiledialog.h \
+		../../QT/5.9/mingw53_32/include/QtCore/qdir.h \
+		../../QT/5.9/mingw53_32/include/QtCore/qfileinfo.h \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qdialog.h \
 		../../QT/5.9/mingw53_32/include/QtWidgets/QApplication \
 		../../QT/5.9/mingw53_32/include/QtWidgets/qapplication.h \
 		../../QT/5.9/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -543,6 +554,11 @@ release/widget.o: widget.cpp widget.h \
 		../../QT/5.9/mingw53_32/include/QtGui/QResizeEvent \
 		../../QT/5.9/mingw53_32/include/QtGui/QMouseEvent \
 		../../QT/5.9/mingw53_32/include/QtGui/QKeyEvent \
+		../../QT/5.9/mingw53_32/include/QtWidgets/QFileDialog \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qfiledialog.h \
+		../../QT/5.9/mingw53_32/include/QtCore/qdir.h \
+		../../QT/5.9/mingw53_32/include/QtCore/qfileinfo.h \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qdialog.h \
 		ui_widget.h \
 		../../QT/5.9/mingw53_32/include/QtWidgets/QAction \
 		../../QT/5.9/mingw53_32/include/QtWidgets/qaction.h \
@@ -557,6 +573,11 @@ release/widget.o: widget.cpp widget.h \
 		../../QT/5.9/mingw53_32/include/QtGui/qinputmethod.h \
 		../../QT/5.9/mingw53_32/include/QtWidgets/QButtonGroup \
 		../../QT/5.9/mingw53_32/include/QtWidgets/qbuttongroup.h \
+		../../QT/5.9/mingw53_32/include/QtWidgets/QHBoxLayout \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qboxlayout.h \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qlayout.h \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qlayoutitem.h \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qgridlayout.h \
 		../../QT/5.9/mingw53_32/include/QtWidgets/QHeaderView \
 		../../QT/5.9/mingw53_32/include/QtWidgets/qheaderview.h \
 		../../QT/5.9/mingw53_32/include/QtWidgets/qabstractitemview.h \
@@ -575,6 +596,16 @@ release/widget.o: widget.cpp widget.h \
 		../../QT/5.9/mingw53_32/include/QtWidgets/qtabbar.h \
 		../../QT/5.9/mingw53_32/include/QtWidgets/qtabwidget.h \
 		../../QT/5.9/mingw53_32/include/QtWidgets/qrubberband.h \
+		../../QT/5.9/mingw53_32/include/QtWidgets/QLabel \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qlabel.h \
+		../../QT/5.9/mingw53_32/include/QtWidgets/QListWidget \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qlistwidget.h \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qlistview.h \
+		../../QT/5.9/mingw53_32/include/QtWidgets/QPushButton \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qpushbutton.h \
+		../../QT/5.9/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		../../QT/5.9/mingw53_32/include/QtWidgets/QSlider \
+		../../QT/5.9/mingw53_32/include/QtWidgets/QTabWidget \
 		../../QT/5.9/mingw53_32/include/QtGui/QScreen \
 		../../QT/5.9/mingw53_32/include/QtGui/qscreen.h \
 		../../QT/5.9/mingw53_32/include/QtCore/QList \

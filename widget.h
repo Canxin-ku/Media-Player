@@ -10,6 +10,8 @@
 #include <QResizeEvent>
 #include <QMouseEvent>
 #include <QKeyEvent>
+#include <QFileDialog>
+#include <QMap>
 
 
 namespace Ui {
@@ -32,36 +34,38 @@ public:
     ~Widget();
 
 private slots:
-    void on_btn_open_clicked(); //
+    void btn_open_clicked(); //选文件
     
-    void on_btn_play_clicked(); //
+    void btn_play_pause_clicked(); //播放
     
-    void on_btn_pasuse_clicked();   //
+    void btn_stop_clicked(); //停止
     
-    void on_btn_stop_clicked(); //
-    
-    void on_voice_control_valueChanged(int value);  //
-    
-    void on_btn_fullscreen_clicked();   //
-    
-    void getDuration(qint64 playTime);  //
+    void voice_control_valueChanged(int value);  //音量变化
 
-    void getPosition(qint64 playTime);  //
+    void voice_play_mute_Cliced();
+    
+    void btn_fullscreen_clicked();   //全屏
 
-    void on_btn_backV_clicked();    //
+    void getDuration(qint64 playTime);  //媒体长度
 
-    void on_btn_nextV_clicked();    //
+    void getPosition(qint64 playTime);  //媒体播放位置
 
-    void on_listWidget_doubleCliked(const QModelIndex &index);
+    void btn_backV_clicked();    //上一个视频
+
+    void btn_nextV_clicked();    //下一个视频
+
+    void listWidget_doubleCliked(const QModelIndex &index);  //播放列表中选择
 
 protected:
-    void resizeEvent(QResizeEvent* event);
+    void resizeEvent(QResizeEvent *event); //播放窗口大小
 
-    void keyPressEvent(QKeyEvent* event);
+    void keyPressEvent(QKeyEvent* event);   //按键
 
-    void mousePressEvent(QMouseEvent* event);
+    void mousePressEvent(QMouseEvent* event);   //鼠标按下
 
-    void mouseDoubleClickEvent(QMouseEvent* event);
+    void mouseDoubleClickEvent(QMouseEvent *event); //双击鼠标
+
+    void disableBtn_next_back();
 
 private:
     Ui::Widget *ui;
@@ -70,11 +74,16 @@ private:
     QVideoWidget *m_VideoWidget;    //播放窗口
     QMediaPlaylist *m_MediaPlayList;    //播放列表
     QMediaPlayer::State m_State;  //播放状态
-    int m_hour; //
-    int m_minute;   //
-    int m_second;   //
-    bool m_SliderHover; //
-    int m_Silder_val;   //
+    int m_hour; //  时
+    int m_minute;   //分
+    int m_second;   //秒
+    int m_Silder_val;   //进度条值
+    bool m_SliderHover; //是否选定进度条
+    bool mute = false;  //是否静音
+    bool playing = false;   //是否播放
+    bool fullScreen = false;
+    int width;
+    int height;
 };
 
 #endif // WIDGET_H

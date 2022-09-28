@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Widget_t {
     QByteArrayData data[16];
-    char stringdata0[260];
+    char stringdata0[243];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,30 +32,30 @@ struct qt_meta_stringdata_Widget_t {
 static const qt_meta_stringdata_Widget_t qt_meta_stringdata_Widget = {
     {
 QT_MOC_LITERAL(0, 0, 6), // "Widget"
-QT_MOC_LITERAL(1, 7, 19), // "on_btn_open_clicked"
-QT_MOC_LITERAL(2, 27, 0), // ""
-QT_MOC_LITERAL(3, 28, 19), // "on_btn_play_clicked"
-QT_MOC_LITERAL(4, 48, 21), // "on_btn_pasuse_clicked"
-QT_MOC_LITERAL(5, 70, 19), // "on_btn_stop_clicked"
-QT_MOC_LITERAL(6, 90, 29), // "on_voice_control_valueChanged"
-QT_MOC_LITERAL(7, 120, 5), // "value"
-QT_MOC_LITERAL(8, 126, 25), // "on_btn_fullscreen_clicked"
-QT_MOC_LITERAL(9, 152, 11), // "getDuration"
-QT_MOC_LITERAL(10, 164, 8), // "playTime"
-QT_MOC_LITERAL(11, 173, 11), // "getPosition"
-QT_MOC_LITERAL(12, 185, 20), // "on_btn_backV_clicked"
-QT_MOC_LITERAL(13, 206, 20), // "on_btn_nextV_clicked"
-QT_MOC_LITERAL(14, 227, 26), // "on_listWidget_doubleCliked"
-QT_MOC_LITERAL(15, 254, 5) // "index"
+QT_MOC_LITERAL(1, 7, 16), // "btn_open_clicked"
+QT_MOC_LITERAL(2, 24, 0), // ""
+QT_MOC_LITERAL(3, 25, 22), // "btn_play_pause_clicked"
+QT_MOC_LITERAL(4, 48, 16), // "btn_stop_clicked"
+QT_MOC_LITERAL(5, 65, 26), // "voice_control_valueChanged"
+QT_MOC_LITERAL(6, 92, 5), // "value"
+QT_MOC_LITERAL(7, 98, 22), // "voice_play_mute_Cliced"
+QT_MOC_LITERAL(8, 121, 22), // "btn_fullscreen_clicked"
+QT_MOC_LITERAL(9, 144, 11), // "getDuration"
+QT_MOC_LITERAL(10, 156, 8), // "playTime"
+QT_MOC_LITERAL(11, 165, 11), // "getPosition"
+QT_MOC_LITERAL(12, 177, 17), // "btn_backV_clicked"
+QT_MOC_LITERAL(13, 195, 17), // "btn_nextV_clicked"
+QT_MOC_LITERAL(14, 213, 23), // "listWidget_doubleCliked"
+QT_MOC_LITERAL(15, 237, 5) // "index"
 
     },
-    "Widget\0on_btn_open_clicked\0\0"
-    "on_btn_play_clicked\0on_btn_pasuse_clicked\0"
-    "on_btn_stop_clicked\0on_voice_control_valueChanged\0"
-    "value\0on_btn_fullscreen_clicked\0"
+    "Widget\0btn_open_clicked\0\0"
+    "btn_play_pause_clicked\0btn_stop_clicked\0"
+    "voice_control_valueChanged\0value\0"
+    "voice_play_mute_Cliced\0btn_fullscreen_clicked\0"
     "getDuration\0playTime\0getPosition\0"
-    "on_btn_backV_clicked\0on_btn_nextV_clicked\0"
-    "on_listWidget_doubleCliked\0index"
+    "btn_backV_clicked\0btn_nextV_clicked\0"
+    "listWidget_doubleCliked\0index"
 };
 #undef QT_MOC_LITERAL
 
@@ -76,8 +76,8 @@ static const uint qt_meta_data_Widget[] = {
        1,    0,   69,    2, 0x08 /* Private */,
        3,    0,   70,    2, 0x08 /* Private */,
        4,    0,   71,    2, 0x08 /* Private */,
-       5,    0,   72,    2, 0x08 /* Private */,
-       6,    1,   73,    2, 0x08 /* Private */,
+       5,    1,   72,    2, 0x08 /* Private */,
+       7,    0,   75,    2, 0x08 /* Private */,
        8,    0,   76,    2, 0x08 /* Private */,
        9,    1,   77,    2, 0x08 /* Private */,
       11,    1,   80,    2, 0x08 /* Private */,
@@ -89,8 +89,8 @@ static const uint qt_meta_data_Widget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,    7,
     QMetaType::Void,
     QMetaType::Void, QMetaType::LongLong,   10,
     QMetaType::Void, QMetaType::LongLong,   10,
@@ -107,17 +107,17 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         Widget *_t = static_cast<Widget *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->on_btn_open_clicked(); break;
-        case 1: _t->on_btn_play_clicked(); break;
-        case 2: _t->on_btn_pasuse_clicked(); break;
-        case 3: _t->on_btn_stop_clicked(); break;
-        case 4: _t->on_voice_control_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 5: _t->on_btn_fullscreen_clicked(); break;
+        case 0: _t->btn_open_clicked(); break;
+        case 1: _t->btn_play_pause_clicked(); break;
+        case 2: _t->btn_stop_clicked(); break;
+        case 3: _t->voice_control_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: _t->voice_play_mute_Cliced(); break;
+        case 5: _t->btn_fullscreen_clicked(); break;
         case 6: _t->getDuration((*reinterpret_cast< qint64(*)>(_a[1]))); break;
         case 7: _t->getPosition((*reinterpret_cast< qint64(*)>(_a[1]))); break;
-        case 8: _t->on_btn_backV_clicked(); break;
-        case 9: _t->on_btn_nextV_clicked(); break;
-        case 10: _t->on_listWidget_doubleCliked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
+        case 8: _t->btn_backV_clicked(); break;
+        case 9: _t->btn_nextV_clicked(); break;
+        case 10: _t->listWidget_doubleCliked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
         default: ;
         }
     }
