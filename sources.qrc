@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/iamge">
+    <qresource prefix="/image">
         <file>icon/back.png</file>
         <file>icon/filePath.png</file>
         <file>icon/next.png</file>
@@ -9,5 +9,8 @@
         <file>icon/volumeMute.png</file>
         <file>icon/volumePlay.png</file>
         <file>icon/fullscreen.png</file>
+    </qresource>
+    <qresource prefix="/qss">
+        <file>myQss.qss</file>
     </qresource>
 </RCC>

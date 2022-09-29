@@ -1,0 +1,10 @@
+
+
+QWidget#Widget{
+    background-color:#000000;
+    border:none;
+}
+
+Qwidget#widget_operate{
+    background-color:#000000;
+}

@@ -19,9 +19,9 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSlider>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QWidget>
+#include <myslider.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -31,7 +31,7 @@ public:
     QGridLayout *gridLayout;
     QWidget *widget_operate;
     QGridLayout *gridLayout_2;
-    QSlider *slider_allTime;
+    MySlider *slider_allTime;
     QHBoxLayout *layout_operate_h;
     QLabel *label_allTime;
     QLabel *label_slash;
@@ -42,7 +42,7 @@ public:
     QPushButton *btn_play;
     QPushButton *btn_next;
     QPushButton *btn_volume;
-    QSlider *slider_volume;
+    MySlider *slider_volume;
     QWidget *widget_operate_space2;
     QPushButton *btn_fullScreen;
     QTabWidget *widget_tab;
@@ -53,31 +53,39 @@ public:
     QPushButton *btn_filePath;
     QWidget *tab_chat;
     QWidget *widget_video;
+    QLabel *label_title;
 
     void setupUi(QWidget *Widget)
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName(QStringLiteral("Widget"));
         Widget->setWindowModality(Qt::WindowModal);
-        Widget->resize(800, 618);
+        Widget->resize(800, 600);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(Widget->sizePolicy().hasHeightForWidth());
         Widget->setSizePolicy(sizePolicy);
+        Widget->setMinimumSize(QSize(800, 600));
+        Widget->setInputMethodHints(Qt::ImhDialableCharactersOnly|Qt::ImhPreferUppercase);
         gridLayout = new QGridLayout(Widget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setSizeConstraint(QLayout::SetMaximumSize);
+        gridLayout->setHorizontalSpacing(0);
+        gridLayout->setVerticalSpacing(10);
+        gridLayout->setContentsMargins(5, 0, 0, 0);
         widget_operate = new QWidget(Widget);
         widget_operate->setObjectName(QStringLiteral("widget_operate"));
         widget_operate->setMinimumSize(QSize(0, 100));
         widget_operate->setMaximumSize(QSize(16777215, 120));
         gridLayout_2 = new QGridLayout(widget_operate);
-        gridLayout_2->setSpacing(6);
+        gridLayout_2->setSpacing(0);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        slider_allTime = new QSlider(widget_operate);
+        gridLayout_2->setContentsMargins(0, 0, 0, 0);
+        slider_allTime = new MySlider(widget_operate);
         slider_allTime->setObjectName(QStringLiteral("slider_allTime"));
         QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
@@ -147,7 +155,7 @@ public:
         btn_stop->setMaximumSize(QSize(50, 50));
         btn_stop->setStyleSheet(QStringLiteral("background-color:transparent;"));
         QIcon icon;
-        icon.addFile(QStringLiteral(":/iamge/icon/stop.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/image/icon/stop.png"), QSize(), QIcon::Normal, QIcon::Off);
         btn_stop->setIcon(icon);
         btn_stop->setIconSize(QSize(40, 40));
 
@@ -161,7 +169,7 @@ public:
         btn_back->setMaximumSize(QSize(50, 50));
         btn_back->setStyleSheet(QStringLiteral("background-color:transparent;"));
         QIcon icon1;
-        icon1.addFile(QStringLiteral(":/iamge/icon/back.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QStringLiteral(":/image/icon/back.png"), QSize(), QIcon::Normal, QIcon::Off);
         btn_back->setIcon(icon1);
         btn_back->setIconSize(QSize(40, 40));
 
@@ -175,7 +183,7 @@ public:
         btn_play->setMaximumSize(QSize(50, 50));
         btn_play->setStyleSheet(QStringLiteral("background-color:transparent;"));
         QIcon icon2;
-        icon2.addFile(QStringLiteral(":/iamge/icon/play.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QStringLiteral(":/image/icon/play.png"), QSize(), QIcon::Normal, QIcon::Off);
         btn_play->setIcon(icon2);
         btn_play->setIconSize(QSize(40, 40));
 
@@ -189,7 +197,7 @@ public:
         btn_next->setMaximumSize(QSize(50, 50));
         btn_next->setStyleSheet(QStringLiteral("background-color:transparent;"));
         QIcon icon3;
-        icon3.addFile(QStringLiteral(":/iamge/icon/next.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon3.addFile(QStringLiteral(":/image/icon/next.png"), QSize(), QIcon::Normal, QIcon::Off);
         btn_next->setIcon(icon3);
         btn_next->setIconSize(QSize(40, 40));
 
@@ -203,19 +211,20 @@ public:
         btn_volume->setMaximumSize(QSize(50, 50));
         btn_volume->setStyleSheet(QStringLiteral("background-color:transparent;"));
         QIcon icon4;
-        icon4.addFile(QStringLiteral(":/iamge/icon/volumePlay.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon4.addFile(QStringLiteral(":/image/icon/volumePlay.png"), QSize(), QIcon::Normal, QIcon::Off);
         btn_volume->setIcon(icon4);
         btn_volume->setIconSize(QSize(40, 40));
 
         layout_operate_h->addWidget(btn_volume);
 
-        slider_volume = new QSlider(widget_operate);
+        slider_volume = new MySlider(widget_operate);
         slider_volume->setObjectName(QStringLiteral("slider_volume"));
         QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy3.setHorizontalStretch(15);
         sizePolicy3.setVerticalStretch(0);
         sizePolicy3.setHeightForWidth(slider_volume->sizePolicy().hasHeightForWidth());
         slider_volume->setSizePolicy(sizePolicy3);
+        slider_volume->setMaximum(100);
         slider_volume->setOrientation(Qt::Horizontal);
 
         layout_operate_h->addWidget(slider_volume);
@@ -235,7 +244,7 @@ public:
         btn_fullScreen->setMaximumSize(QSize(50, 50));
         btn_fullScreen->setStyleSheet(QStringLiteral("background-color:transparent;"));
         QIcon icon5;
-        icon5.addFile(QStringLiteral(":/iamge/icon/fullscreen.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon5.addFile(QStringLiteral(":/image/icon/fullscreen.png"), QSize(), QIcon::Normal, QIcon::Off);
         btn_fullScreen->setIcon(icon5);
         btn_fullScreen->setIconSize(QSize(40, 40));
 
@@ -249,11 +258,8 @@ public:
 
         widget_tab = new QTabWidget(Widget);
         widget_tab->setObjectName(QStringLiteral("widget_tab"));
-        QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(widget_tab->sizePolicy().hasHeightForWidth());
-        widget_tab->setSizePolicy(sizePolicy4);
+        sizePolicy.setHeightForWidth(widget_tab->sizePolicy().hasHeightForWidth());
+        widget_tab->setSizePolicy(sizePolicy);
         widget_tab->setMinimumSize(QSize(200, 600));
         widget_tab->setMaximumSize(QSize(250, 16777215));
         widget_tab->setStyleSheet(QStringLiteral(""));
@@ -263,9 +269,10 @@ public:
         tab_list = new QWidget();
         tab_list->setObjectName(QStringLiteral("tab_list"));
         gridLayout_3 = new QGridLayout(tab_list);
-        gridLayout_3->setSpacing(6);
+        gridLayout_3->setSpacing(10);
         gridLayout_3->setContentsMargins(11, 11, 11, 11);
         gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        gridLayout_3->setContentsMargins(10, 0, 10, 0);
         listWidget_play = new QListWidget(tab_list);
         listWidget_play->setObjectName(QStringLiteral("listWidget_play"));
         listWidget_play->setStyleSheet(QStringLiteral(""));
@@ -275,7 +282,7 @@ public:
         btn_filePath = new QPushButton(tab_list);
         btn_filePath->setObjectName(QStringLiteral("btn_filePath"));
         QIcon icon6;
-        icon6.addFile(QStringLiteral(":/iamge/icon/filePath.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon6.addFile(QStringLiteral(":/image/icon/filePath.png"), QSize(), QIcon::Normal, QIcon::Off);
         btn_filePath->setIcon(icon6);
         btn_filePath->setIconSize(QSize(22, 22));
 
@@ -292,7 +299,19 @@ public:
         widget_video->setObjectName(QStringLiteral("widget_video"));
         sizePolicy.setHeightForWidth(widget_video->sizePolicy().hasHeightForWidth());
         widget_video->setSizePolicy(sizePolicy);
-        widget_video->setMinimumSize(QSize(569, 450));
+        widget_video->setMinimumSize(QSize(577, 480));
+        widget_video->setStyleSheet(QStringLiteral("background:rgb(0, 0, 0)"));
+        label_title = new QLabel(widget_video);
+        label_title->setObjectName(QStringLiteral("label_title"));
+        label_title->setGeometry(QRect(0, 0, 577, 35));
+        sizePolicy1.setHeightForWidth(label_title->sizePolicy().hasHeightForWidth());
+        label_title->setSizePolicy(sizePolicy1);
+        label_title->setMinimumSize(QSize(577, 35));
+        QFont font2;
+        font2.setPointSize(18);
+        label_title->setFont(font2);
+        label_title->setStyleSheet(QStringLiteral("background:transparent;color:rgb(255, 255, 255)"));
+        label_title->setAlignment(Qt::AlignCenter);
 
         gridLayout->addWidget(widget_video, 1, 0, 1, 1);
 
@@ -321,9 +340,10 @@ public:
         btn_volume->setText(QString());
         btn_fullScreen->setText(QString());
         widget_tab->setTabText(widget_tab->indexOf(tab_menber), QApplication::translate("Widget", "\346\210\220\345\221\230", Q_NULLPTR));
-        btn_filePath->setText(QApplication::translate("Widget", "\346\226\207\344\273\266\345\244\271", Q_NULLPTR));
+        btn_filePath->setText(QApplication::translate("Widget", " \351\200\211\346\213\251\346\226\207\344\273\266\345\244\271", Q_NULLPTR));
         widget_tab->setTabText(widget_tab->indexOf(tab_list), QApplication::translate("Widget", "\346\222\255\346\224\276\345\210\227\350\241\250", Q_NULLPTR));
         widget_tab->setTabText(widget_tab->indexOf(tab_chat), QApplication::translate("Widget", "\350\201\212\345\244\251", Q_NULLPTR));
+        label_title->setText(QApplication::translate("Widget", "text", Q_NULLPTR));
     } // retranslateUi
 
 };

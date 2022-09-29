@@ -12,6 +12,7 @@
 #include <QKeyEvent>
 #include <QFileDialog>
 #include <QMap>
+#include <QTimer>
 
 
 namespace Ui {
@@ -56,6 +57,18 @@ private slots:
 
     void listWidget_doubleCliked(const QModelIndex &index);  //播放列表中选择
 
+    void name_changed();  //更换媒体名字
+
+    void slider_time_pressed(); //鼠标按下时间进度
+
+    void slider_time_released(int value);   //鼠标松开时间进度
+    
+    void slider_volume_pressed();   //鼠标按下音量进度
+    
+    void slider_Volume_released(int value);  //鼠标松开音量进度
+
+    void mouseClick();  //鼠标单击
+
 protected:
     void resizeEvent(QResizeEvent *event); //播放窗口大小
 
@@ -78,12 +91,15 @@ private:
     int m_minute;   //分
     int m_second;   //秒
     int m_Silder_val;   //进度条值
-    bool m_SliderHover; //是否选定进度条
+    bool m_SliderHover = false; //是否选定进度条
     bool mute = false;  //是否静音
     bool playing = false;   //是否播放
-    bool fullScreen = false;
-    int width;
-    int height;
+    bool fullScreen = false;    //是否全屏
+    int width;  //屏幕宽
+    int height; //屏幕高
+    QTimer *timer;   //设置计时器
+    qint64 duration;    //视频
+    QStringList files;  //列表文件
 };
 
 #endif // WIDGET_H
