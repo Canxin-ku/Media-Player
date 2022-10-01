@@ -22,7 +22,7 @@ void MySlider::mouseReleaseEvent(QMouseEvent *event)
     //获取鼠标相对于slider的位置
     int relativePos = event->pos().x();
     //判断鼠标是否脱离进度条范围
-    if(event->pos().y()>this->height()||event->pos().y()<0)
+    if(event->pos().y()>this->height()+5||event->pos().y()<-5)
     {
         qDebug()<<"超出进度条范围";
         emit mouseRelease(-1000);
@@ -35,11 +35,3 @@ void MySlider::mouseReleaseEvent(QMouseEvent *event)
     qDebug()<<"进度："<<value;
     emit mouseRelease(value);
 }
-
-//void MySlider::mouseMoveEvent(QMouseEvent *event)
-//{
-//    if(event->pos().y()>this->pos().y()+this->height()||event->pos().y()<this->pos().y())
-//    {
-//        return;
-//    }
-//}

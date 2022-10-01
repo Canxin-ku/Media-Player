@@ -1,0 +1,360 @@
+/* 总体的style */
+#Widget
+{
+    background-color:#000000;
+    border:none;
+}
+
+
+QWidget#widget_operate
+{
+    background:none;
+}
+
+QTabWidget#widget_tab::pane
+{
+    border:none;
+    background-color:#1A1A1A;
+    border-top: 2px solid #323232;
+}
+
+QTabWidget#widget_tab::tab-bar
+{
+    alignment: center;
+}
+
+QTabBar::tab
+{
+    height:30;
+    color:#969696;
+    background-color:#1A1A1A;
+    min-width: 8ex;
+    font:12px;
+}
+
+QTabBar::tab:selected
+{
+    color:#1296db;
+    background-color:#323232;
+    min-width: 8ex;
+}
+
+QTabBar::tab:first,QTabBar::tab:last
+{
+    width:51;
+}
+
+QTabBar::tab:second
+{
+    width:72;
+}
+
+QListWidget
+{
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom: 2px solid #323232;
+    background-color:#1A1A1A;
+    outline:none;
+    font:15px;
+}
+
+#listWidget_play::item
+{
+    background-color:#1A1A1A;
+    color:#969696;
+    padding:8px;
+    border:transparent;
+}
+
+#listWidget_play::item:hover
+{
+    background-color:#323232;
+}
+
+
+#listWidget_play::item:selected
+{
+    border-left: 5px solid #1296db;
+    color:#1296db;
+}
+
+QLabel
+{
+    color:#969696;
+}
+
+/* 播放键 */
+QPushButton#btn_play[whatsThis="style1"]
+{
+    border-image:url(":/image/icon/begin_normal.png");
+}
+
+QPushButton#btn_play:hover[whatsThis="style1"]
+{
+    border-image:url(":/image/icon/begin_hover.png");
+}
+
+QPushButton#btn_play[whatsThis="style2"]
+{
+    border-image:url(":/image/icon/pause_normal.png");
+}
+
+QPushButton#btn_play:hover[whatsThis="style2"]
+{
+    border-image:url(":/image/icon/pause_hover.png");
+}
+
+
+/* 音量键 */
+QPushButton#btn_volume[whatsThis="style1"]
+{
+    border-image:url(":/image/icon/volume_normal.png");
+}
+
+QPushButton#btn_volume:hover[whatsThis="style1"]
+{
+    border-image:url(":/image/icon/volume_hover.png");
+}
+
+QPushButton#btn_volume[whatsThis="style2"]
+{
+    border-image:url(":/image/icon/volumeMute_normal.png");
+}
+
+QPushButton#btn_volume:hover[whatsThis="style2"]
+{
+    border-image:url(":/image/icon/volumeMute_hover.png");
+}
+
+/* 全屏 */
+QPushButton#btn_fullScreen[whatsThis="style1"]
+{
+    border-image:url(":/image/icon/fullScreen_normal.png");
+}
+
+QPushButton#btn_fullScreen:hover[whatsThis="style1"]
+{
+    border-image:url(":/image/icon/fullScreen_hover.png");
+}
+
+QPushButton#btn_fullScreen[whatsThis="style2"]
+{
+    border-image:url(":/image/icon/fullScreenCancel_normal.png");
+}
+
+QPushButton#btn_fullScreen:hover[whatsThis="style2"]
+{
+    border-image:url(":/image/icon/fullScreenCancel_hover.png");
+}
+
+/* 上一 */
+QPushButton#btn_back
+{
+    border-image:url(":/image/icon/back_normal.png");
+}
+
+QPushButton#btn_back:hover
+{
+    border-image:url(":/image/icon/back_hover.png");
+}
+
+QPushButton#btn_back:disabled
+{
+    border-image:url(":/image/icon/back_disable.png");
+}
+
+/* 下一 */
+QPushButton#btn_next
+{
+    border-image:url(":/image/icon/next_normal.png");
+}
+
+QPushButton#btn_next:hover
+{
+    border-image:url(":/image/icon/next_hover.png");
+}
+
+QPushButton#btn_next:disabled
+{
+    border-image:url(":/image/icon/next_disable.png");
+}
+
+/* 停止 */
+QPushButton#btn_stop
+{
+    border-image:url(":/image/icon/stop_normal.png");
+}
+
+QPushButton#btn_stop:hover
+{
+    border-image:url(":/image/icon/stop_hover.png");
+}
+
+QPushButton#btn_stop:disabled
+{
+    border-image:url(":/image/icon/stop_disable.png");
+}
+
+/* 文件夹 */
+QPushButton#btn_filePath
+{
+    border-image:url(":/image/icon/filePath_normal.png");
+}
+
+QPushButton#btn_filePath:hover
+{
+    border-image:url(":/image/icon/filePath_hover.png");
+}
+
+/* 滚动条 */
+QScrollBar:vertical
+{
+    width:8px;
+    border: none;
+    background: transparent;
+    margin-left:2px;
+    margin-right:2px;
+}
+
+QScrollBar::handle:vertical
+{
+    width:8px;
+    background:rgb(60, 60, 60);
+    border-radius:4px;
+}
+
+QScrollBar::handle:vertical:hover
+{
+    background:rgb(94, 94, 94);
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical
+{
+    border: none;
+    background: none;
+    color: none;
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical
+{
+    border: none;
+    background: none;
+    color: none;
+}
+
+QScrollBar::sub-page:vertical,QScrollBar::add-page:vertical
+{
+    border: none;
+    background: none;
+    color: none;
+}
+
+/* 滑块 */
+QSlider::groove:horizontal
+{
+    border: 0px solid #bbb;
+}
+
+QSlider::handle:horizontal  {
+    width:5px;
+    background: white;
+    border:3px solid;
+    border-radius:4px;
+    margin-top:6px;
+    margin-bottom:6px;
+    border-left-color:white;
+    border-right-color:#1296db;
+    border-top-color:white;
+    border-bottom-color:#1296db;
+}
+
+QSlider::handle:horizontal:hover  {
+    width:7px;
+    background: white;
+    border:3px solid;
+    border-radius:5px;
+    margin-top:5px;
+    margin-bottom:5px;
+    border-left-color:white;
+    border-right-color:#1296db;
+    border-top-color:#1296db;
+    border-bottom-color:white;
+}
+
+QSlider::add-page:groove:horizontal  {
+    background: white;
+    border:0px solid red;
+    border-radius:2px;
+    margin-top:9px;
+    margin-bottom:9px;
+
+}
+
+QSlider::sub-page:groove:horizontal  {
+    border:0px solid red;
+    border-radius:2px;
+    margin-top:9px;
+    margin-bottom:9px;
+    background: #1296db;
+}
+
+
+/* 菜单栏 */
+#widget_menu
+{
+    background:#262626;
+}
+
+#btn_icon_appName
+{
+    background:transparent;
+    border:none;
+    color:#969696;
+}
+
+#label_mediaName
+{
+    color:#969696;
+}
+
+#btn_min
+{
+    border-image:url(":/image/icon/minimize_normal.png");
+}
+
+#btn_min:hover
+{
+    border-image:url(":/image/icon/minimize_hover.png");
+}
+
+#btn_max[whatsThis="style1"]
+{
+    border-image:url(":/image/icon/maxmize_normal.png");
+}
+
+#btn_max:hover[whatsThis="style1"]
+{
+    border-image:url(":/image/icon/maxmize_hover.png");
+}
+
+#btn_max[whatsThis="style2"]
+{
+    border-image:url(":/image/icon/resize_normal.png");
+}
+
+#btn_max:hover[whatsThis="style2"]
+{
+    border-image:url(":/image/icon/resize_hover.png");
+}
+
+#btn_close
+{
+    border-image:url(":/image/icon/close_normal.png");
+}
+
+#btn_close:hover
+{
+    border-image:url(":/image/icon/close_hover.png");
+}

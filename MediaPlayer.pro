@@ -5,12 +5,13 @@
 #-------------------------------------------------
 
 QT       += core gui multimedia multimediawidgets
-
+LIBS += -luser32
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = MediaPlayer
 TEMPLATE = app
 
+CONFIG += resources_big
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -26,11 +27,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         widget.cpp \
-    myslider.cpp
+    myslider.cpp \
+    dragmenu.cpp
 
 HEADERS += \
         widget.h \
-    myslider.h
+    myslider.h \
+    dragmenu.h
 
 FORMS += \
         widget.ui

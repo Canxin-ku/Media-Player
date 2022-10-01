@@ -1,16 +1,38 @@
 <RCC>
     <qresource prefix="/image">
-        <file>icon/back.png</file>
-        <file>icon/filePath.png</file>
-        <file>icon/next.png</file>
-        <file>icon/pause.png</file>
-        <file>icon/play.png</file>
-        <file>icon/stop.png</file>
-        <file>icon/volumeMute.png</file>
-        <file>icon/volumePlay.png</file>
-        <file>icon/fullscreen.png</file>
+        <file>icon/back_disable.png</file>
+        <file>icon/back_hover.png</file>
+        <file>icon/back_normal.png</file>
+        <file>icon/begin_hover.png</file>
+        <file>icon/begin_normal.png</file>
+        <file>icon/close_hover.png</file>
+        <file>icon/close_normal.png</file>
+        <file>icon/fullScreen_hover.png</file>
+        <file>icon/fullScreen_normal.png</file>
+        <file>icon/fullScreenCancel_hover.png</file>
+        <file>icon/fullScreenCancel_normal.png</file>
+        <file>icon/maxmize_hover.png</file>
+        <file>icon/maxmize_normal.png</file>
+        <file>icon/minimize_hover.png</file>
+        <file>icon/minimize_normal.png</file>
+        <file>icon/next_disable.png</file>
+        <file>icon/next_hover.png</file>
+        <file>icon/next_normal.png</file>
+        <file>icon/pause_hover.png</file>
+        <file>icon/pause_normal.png</file>
+        <file>icon/stop_disable.png</file>
+        <file>icon/stop_hover.png</file>
+        <file>icon/stop_normal.png</file>
+        <file>icon/volume_hover.png</file>
+        <file>icon/volume_normal.png</file>
+        <file>icon/volumeMute_hover.png</file>
+        <file>icon/volumeMute_normal.png</file>
+        <file>icon/filePath_hover.png</file>
+        <file>icon/filePath_normal.png</file>
+        <file>icon/resize_hover.png</file>
+        <file>icon/resize_normal.png</file>
     </qresource>
     <qresource prefix="/qss">
-        <file>myQss.qss</file>
+        <file>qss/myQss.qss</file>
     </qresource>
 </RCC>

@@ -8,6 +8,8 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->setWindowFlags(Qt::Window|Qt::FramelessWindowHint);
+    //ui->widget_raise->setWindowFlags(Qt::Window|Qt::FramelessWindowHint);
     width = QGuiApplication::primaryScreen()->geometry().width();   //获取当前屏幕宽
     height = QGuiApplication::primaryScreen()->geometry().height(); //获取当前屏幕高
 
@@ -26,6 +28,7 @@ Widget::Widget(QWidget *parent) :
     ui->btn_stop->setDisabled(true);
     ui->btn_next->setDisabled(true);
     ui->btn_back->setDisabled(true);
+    ui->btn_icon_appName->setDisabled(true);    //菜单栏标题按钮设置为不可用
 
     //设置焦点
     ui->btn_back->setFocusPolicy(Qt::NoFocus);
@@ -60,17 +63,30 @@ Widget::Widget(QWidget *parent) :
     connect(ui->slider_allTime,SIGNAL(mouseRelease(int)),this,SLOT(slider_time_released(int)));
     connect(ui->slider_volume,SIGNAL(mousePress()),this,SLOT(slider_volume_pressed()));
     connect(ui->slider_volume,SIGNAL(mouseRelease(int)),this,SLOT(slider_Volume_released(int)));
-
+    connect(ui->widget_menu,SIGNAL(mousePress()),this,SLOT(dragPress()));
+    connect(ui->widget_menu,SIGNAL(mouseMove(QPoint)),this,SLOT(dragMove(QPoint)));
+    connect(ui->widget_menu,SIGNAL(mouseReleased()),this,SLOT(dragReleased()));
+    connect(ui->btn_min,&QPushButton::clicked,this,&Widget::showMinimized);
+    connect(ui->btn_max,&QPushButton::clicked,this,&Widget::switch_maxMinWin);
+    connect(ui->btn_close,&QPushButton::clicked,this,&Widget::close);
 
     //控件可见
     ui->label_allTime->setVisible(false);
     ui->label_currentTime->setVisible(false);
     ui->label_slash->setVisible(false);
     ui->slider_allTime->setVisible(false);
+    ui->btn_fullScreen->setVisible(false);
+    ui->label_title->setVisible(false);
+
 
     //初始化时一些值
+    ui->btn_icon_appName->setText(tr("同步播放器"));
     ui->slider_volume->setValue(50);
     m_MediaPlayer->setVolume(50);
+    ui->btn_play->setWhatsThis("style1");
+    ui->btn_volume->setWhatsThis("style1");
+    ui->btn_fullScreen->setWhatsThis("style1");
+    ui->btn_max->setWhatsThis("style1");
 }
 
 Widget::~Widget()
@@ -78,37 +94,81 @@ Widget::~Widget()
     delete ui;
 }
 
+//切换最大最小化
+void Widget::switch_maxMinWin()
+{
+    if(ismaxsize)
+    {
+        showNormal();
+        this->resize(winSize);
+        this->move(winTopleft);      
+        ui->btn_max->setWhatsThis("style1");
+        refreshUI(ui->btn_max);
+    }
+    else
+    {
+        winTopleft = this->frameGeometry().topLeft();
+        winSize = this->size();
+        showMaximized();
+        ui->btn_max->setWhatsThis("style2");
+        refreshUI(ui->btn_max);
+    }
+    ismaxsize = !ismaxsize;
+}
+
+//窗口拖动
+void Widget::dragPress()
+{
+    isDrag=true;
+    winTopleft = this->frameGeometry().topLeft();
+}
+
+void Widget::dragMove(QPoint distance)
+{
+    this->move(distance+winTopleft);
+}
+
+void Widget::dragReleased()
+{
+    isDrag=false;
+}
+
+//音量进度条
 void Widget::slider_volume_pressed()
 {
     m_SliderHover = true;
+    volume_beg_val = ui->slider_volume->value();
 }
 
 void Widget::slider_Volume_released(int value)
 {
     m_SliderHover = false;
+    qDebug()<<value;
     if(-1000!=value)
     {
-        int val = value;
-        if(val<=0)
+        volume_beg_val = value;
+        if(volume_beg_val<=0)
         {
             mute = true;
-            val = 0;
-            ui->btn_volume->setIcon(QIcon(":/image/icon/volumeMute.png"));
+            volume_beg_val = 0;
+            ui->btn_volume->setWhatsThis("style2");
+            refreshUI(ui->btn_volume);
         }
         else
         {
             if(mute)
             {
-                ui->btn_volume->setIcon(QIcon(":/image/icon/volumePlay.png"));
+                ui->btn_volume->setWhatsThis("style1");
+                refreshUI(ui->btn_volume);
             }
-            if(val > 100)
+            if(volume_beg_val > 100)
             {
-                val = 100;
+                volume_beg_val = 100;
             }
         }
-        ui->slider_volume->setValue(val);
-        m_MediaPlayer->setVolume(val);
+        m_MediaPlayer->setVolume(volume_beg_val);
     }
+    ui->slider_volume->setValue(volume_beg_val);
 }
 
 //时间进度按下
@@ -139,13 +199,23 @@ void Widget::name_changed()
     int getindex = m_MediaPlayList->currentIndex();
     QString name = files.at(getindex);
     ui->label_title->setText(name);
+    ui->label_mediaName->setText(name);
     ui->listWidget_play->setCurrentRow(getindex);
 }
 
 //设置播放窗口大小
 void Widget::resizeEvent(QResizeEvent *event)
 {
-    m_VideoWidget->resize(ui->widget_video->size());
+    QSize changeSize;
+    if(!fullScreen)
+    {
+        changeSize = QSize(ui->widget_video->size().width(),ui->widget_video->size().height()-ui->widget_operate->size().height());
+    }
+    else
+    {
+        changeSize=ui->widget_video->size();
+    }
+    m_VideoWidget->resize(changeSize);
     ui->label_title->resize(ui->widget_video->size().width(),ui->label_title->size().height());
 }
 
@@ -156,7 +226,7 @@ void Widget::btn_open_clicked()
     m_StrList.clear();          //列表变量清空
     files.clear();
 
-    QDir fileDir = QFileDialog::getExistingDirectory(this,"保存","/");    //选择文件夹
+    QDir fileDir = QFileDialog::getExistingDirectory(this,"保存","F:/5343");    //选择文件夹
     QStringList nameFilters;
     nameFilters<<"*.mp4"<<"*.avi"<<"*.mkv"<<"*.mp3"; //设置文件搜索规则
     QString strDir = fileDir.absolutePath();    //获取文件夹绝对路径
@@ -186,15 +256,14 @@ void Widget::listWidget_doubleCliked(const QModelIndex &index)
     m_MediaPlayer->play();
     disableBtn_next_back(); //设置上下视频可用性
 
-
     //进度时间可见性
     ui->label_allTime->setVisible(true);
     ui->label_currentTime->setVisible(true);
     ui->label_slash->setVisible(true);
     ui->slider_allTime->setVisible(true);
+    ui->btn_fullScreen->setVisible(true);
     ui->label_title->raise();
-
-
+    ui->widget_operate->raise();
 }
 
 //播放/暂停
@@ -216,14 +285,15 @@ void Widget::btn_play_pause_clicked()
         {
             m_State = QMediaPlayer::PlayingState;
             m_MediaPlayer->play();
-            ui->btn_play->setIcon(QIcon(":/image/icon/pause.png"));
+            ui->btn_play->setWhatsThis("style2");
         }
         else
         {
             m_State = QMediaPlayer::PausedState;
             m_MediaPlayer->pause();
-            ui->btn_play->setIcon(QIcon(":/image/icon/play.png"));
+            ui->btn_play->setWhatsThis("style1");
         }
+        refreshUI(ui->btn_play);
         playing = !playing;
     }
 
@@ -243,6 +313,7 @@ void Widget::btn_stop_clicked()
     ui->label_currentTime->setVisible(false);
     ui->label_slash->setVisible(false);
     ui->slider_allTime->setVisible(false);
+    ui->btn_fullScreen->setVisible(false);
 }
 
 //静音
@@ -250,16 +321,22 @@ void Widget::voice_play_mute_Cliced()
 {
    if(!mute)
    {
+       volume_beg_val = m_MediaPlayer->volume();
        m_MediaPlayer->setVolume(0);
-       ui->btn_volume->setIcon(QIcon(":/image/icon/volumeMute.png"));
+       ui->btn_volume->setWhatsThis("style2");
        ui->slider_volume->setValue(0);
    }
    else
    {
-       m_MediaPlayer->setVolume(50);
-       ui->btn_volume->setIcon(QIcon(":/image/icon/volumePlay.png"));
-       ui->slider_volume->setValue(50);
+       if(volume_beg_val==0)
+       {
+           volume_beg_val = 50;
+       }
+       m_MediaPlayer->setVolume(volume_beg_val);
+       ui->btn_volume->setWhatsThis("style1");
+       ui->slider_volume->setValue(volume_beg_val);
    }
+   refreshUI(ui->btn_volume);
    mute = !mute;
 }
 
@@ -272,29 +349,19 @@ void Widget::voice_control_valueChanged(int value)
 //全屏
 void Widget::btn_fullscreen_clicked()
 {
-    if(fullScreen)
-    {
-        resize(800,600);
-        this->setFocus();
-    }
-    else
-    {
-        showMaximized();
-    }
-    fullScreen = !fullScreen;
+    ui_fullScreen_set();
 }
 
 //快捷键
 void Widget::keyPressEvent(QKeyEvent *event)
 {
-    if(!m_SliderHover)
+    if(!m_SliderHover&&!isDrag)
     {
         if(Qt::Key_Escape==event->key())    //退出全屏
         {
             if(fullScreen)
             {
-                resize(800,600);
-                this->setFocus();
+                ui_fullScreen_set();
             }
         }
 
@@ -336,7 +403,8 @@ void Widget::keyPressEvent(QKeyEvent *event)
             }
             else if(num==0)
             {
-                ui->btn_volume->setIcon(QIcon(":/image/icon/volumePlay.png"));
+                ui->btn_volume->setWhatsThis("style1");
+                refreshUI(ui->btn_volume);
                 mute = false;
             }
             num += 5;
@@ -356,7 +424,8 @@ void Widget::keyPressEvent(QKeyEvent *event)
             {
                 mute = true;
                 num = 0;
-                ui->btn_volume->setIcon(QIcon(":/image/icon/volumeMute.png"));
+                ui->btn_volume->setWhatsThis("style2");
+                refreshUI(ui->btn_volume);
             }
             m_MediaPlayer->setVolume(num);
             ui->slider_volume->setValue(num);
@@ -374,15 +443,7 @@ void Widget::mouseDoubleClickEvent(QMouseEvent *event)
     }
     if(ui->widget_video->hasFocus())
     {
-        if(fullScreen)
-        {
-            resize(800,600);
-        }
-        else
-        {
-            showMaximized();
-        }
-        fullScreen = !fullScreen;
+        ui_fullScreen_set();
     }
 }
 
@@ -406,8 +467,6 @@ void Widget::mousePressEvent(QMouseEvent *event)
         timer->start(300);
     }
 }
-
-
 
 //计算上下视频是否生效
 void Widget::disableBtn_next_back()
@@ -435,12 +494,13 @@ void Widget::disableBtn_next_back()
     m_State = QMediaPlayer::PlayingState;
 
     ui->btn_stop->setDisabled(false);
-    ui->btn_play->setIcon(QIcon(":/image/icon/pause.png"));
+    ui->btn_play->setWhatsThis("style2");
+    refreshUI(ui->btn_play);
     ui->label_allTime->setVisible(true);
     ui->label_currentTime->setVisible(true);
     ui->label_slash->setVisible(true);
     ui->slider_allTime->setVisible(true);
-
+    ui->btn_fullScreen->setVisible(true);
 }
 
 //上一视频
@@ -509,4 +569,44 @@ void Widget::setTimeSlider(qint64 playTime)
     {
         ui->slider_allTime->setValue(playTime);
     }
+}
+
+//更新控件
+void Widget::refreshUI(QWidget *widget)
+{
+    style()->unpolish(widget);
+    style()->polish(widget);
+    widget->repaint();
+}
+
+//全屏操作
+void Widget::ui_fullScreen_set()
+{
+    ui->label_title->setVisible(fullScreen);
+    ui->widget_tab->setVisible(fullScreen);
+    ui->widget_menu->setVisible(fullScreen);
+    //ui->widget_operate->setVisible(fullScreen);
+
+
+    fullScreen = !fullScreen;
+    if(!fullScreen)
+    {
+        ui->btn_fullScreen->setWhatsThis("style1");
+        showNormal();
+        if(ismaxsize)
+        {
+            showMaximized();
+        }
+        else
+        {
+
+            resize(800,600);
+        }
+    }
+    else
+    {
+        ui->btn_fullScreen->setWhatsThis("style2");
+        showFullScreen();
+    }
+    refreshUI(ui->btn_fullScreen);
 }

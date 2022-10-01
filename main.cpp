@@ -5,13 +5,13 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-    QFile file(":/qss/myQss.qss");
+    QApplication a(argc, argv);
+    QFile file(":/qss/qss/myQss.qss");
     file.open(QIODevice::ReadOnly);
-    app.setStyleSheet(file.readAll());
+    a.setStyleSheet(file.readAll());
 
     Widget w;
     w.show();
 
-    return app.exec();
+    return a.exec();
 }
