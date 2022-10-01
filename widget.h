@@ -15,6 +15,7 @@
 #include <QTimer>
 #include <QListWidget>
 #include <windows.h>
+#include <QCursor>
 
 
 namespace Ui {
@@ -69,8 +70,6 @@ private slots:
     
     void slider_Volume_released(int value);  //鼠标松开音量进度
 
-    void mouseClick();  //鼠标单击
-
     void dragPress();   //拖动点击
 
     void dragMove(QPoint distance); //拖动
@@ -79,14 +78,18 @@ private slots:
 
     void switch_maxMinWin();    //切换窗口最大化
 
+    void fullScreen_mouseMove_event(QPoint pos);   //全屏时鼠标移动
+
+    void fullScreen_mouseMoveEnd_event();   //鼠标移动结束后
+
+    void mouseSingleClick();   //单击鼠标
+
+    void mouseDoubleClick(); //双击鼠标
+
 protected:
     void resizeEvent(QResizeEvent *event); //播放窗口大小
 
     void keyPressEvent(QKeyEvent* event);   //按键
-
-    void mousePressEvent(QMouseEvent* event);   //鼠标按下
-
-    void mouseDoubleClickEvent(QMouseEvent *event); //双击鼠标
 
     void disableBtn_next_back();
 
@@ -111,15 +114,16 @@ private:
     bool fullScreen = false;    //是否全屏
     bool isDrag=false;    //是否正在拖动
     bool ismaxsize = false; //是否最大化
+    bool isMoveShow = false;    //全屏移动鼠标时是否已经显示
     int width;  //屏幕宽
     int height; //屏幕高
     int volume_beg_val;
-    QTimer *timer;   //设置单击计时器
     QTimer *fullScreenTimer;    //全屏的timer
     qint64 duration;    //视频
     QStringList files;  //列表文件
     QPoint winTopleft;  //窗口初始位置
     QSize winSize;
+    QPoint fullScreen_mousePos;
 };
 
 #endif // WIDGET_H

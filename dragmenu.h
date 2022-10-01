@@ -22,6 +22,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
 
+
 signals:
     void mousePress();
     void mouseMove(QPoint pos);

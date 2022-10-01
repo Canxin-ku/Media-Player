@@ -28,12 +28,14 @@ SOURCES += \
         main.cpp \
         widget.cpp \
     myslider.cpp \
-    dragmenu.cpp
+    dragmenu.cpp \
+    clickvideo.cpp
 
 HEADERS += \
         widget.h \
     myslider.h \
-    dragmenu.h
+    dragmenu.h \
+    clickvideo.h
 
 FORMS += \
         widget.ui

@@ -7,9 +7,8 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-
+    this->setMouseTracking(true);
     this->setWindowFlags(Qt::Window|Qt::FramelessWindowHint);
-    //ui->widget_raise->setWindowFlags(Qt::Window|Qt::FramelessWindowHint);
     width = QGuiApplication::primaryScreen()->geometry().width();   //获取当前屏幕宽
     height = QGuiApplication::primaryScreen()->geometry().height(); //获取当前屏幕高
 
@@ -18,7 +17,7 @@ Widget::Widget(QWidget *parent) :
     m_MediaPlayer = new QMediaPlayer;   //播放器
     m_VideoWidget = new QVideoWidget(ui->widget_video);   //播放窗口并赋值到UI上
     m_MediaPlayList = new QMediaPlaylist;   //播放列表
-    timer = new QTimer(this);   //构造timer用于区分单击和双击
+    fullScreenTimer = new QTimer(this); //鼠标移动结束计时器
 
     m_MediaPlayer->setPlaylist(m_MediaPlayList);    //播放器添加播放列表
     m_MediaPlayer->setVideoOutput(m_VideoWidget);   //输出到播放窗口
@@ -57,7 +56,10 @@ Widget::Widget(QWidget *parent) :
     connect(ui->btn_fullScreen,&QPushButton::clicked,this,&Widget::btn_fullscreen_clicked);
 
     connect(m_MediaPlayList,&QMediaPlaylist::currentIndexChanged,this,&Widget::name_changed);
-    connect(timer,SIGNAL(timeout()),this,SLOT(mouseClick()));
+    connect(fullScreenTimer,SIGNAL(timeout()),this,SLOT(fullScreen_mouseMoveEnd_event()));
+    connect(ui->widget_video,SIGNAL(singleClicked()),this,SLOT(mouseSingleClick()));
+    connect(ui->widget_video,SIGNAL(doubleClicked()),this,SLOT(mouseDoubleClick()));
+    connect(ui->widget_video,SIGNAL(mouseMoving(QPoint)),this,SLOT(fullScreen_mouseMove_event(QPoint)));
 
     connect(ui->slider_allTime,SIGNAL(mousePress()),this,SLOT(slider_time_pressed()));
     connect(ui->slider_allTime,SIGNAL(mouseRelease(int)),this,SLOT(slider_time_released(int)));
@@ -87,6 +89,8 @@ Widget::Widget(QWidget *parent) :
     ui->btn_volume->setWhatsThis("style1");
     ui->btn_fullScreen->setWhatsThis("style1");
     ui->btn_max->setWhatsThis("style1");
+    ui->widget_video->setMouseTracking(true);
+    m_VideoWidget->setMouseTracking(true);
 }
 
 Widget::~Widget()
@@ -433,24 +437,9 @@ void Widget::keyPressEvent(QKeyEvent *event)
     }
 }
 
-//双击
-void Widget::mouseDoubleClickEvent(QMouseEvent *event)
-{ 
-    timer->stop();  //判断双击后计时器停止
-    if(m_SliderHover)
-    {
-        return;
-    }
-    if(ui->widget_video->hasFocus())
-    {
-        ui_fullScreen_set();
-    }
-}
-
 //单击事件
-void Widget::mouseClick()
+void Widget::mouseSingleClick()
 {
-    timer->stop();
     if(m_SliderHover)
     {
         return;
@@ -459,13 +448,17 @@ void Widget::mouseClick()
 
 }
 
-//鼠标按下时计时，如果超时则是单击，否则双击
-void Widget::mousePressEvent(QMouseEvent *event)
-{
-    if(ui->widget_video->hasFocus())
+
+//双击事件
+void Widget::mouseDoubleClick()
+{ 
+    if(m_SliderHover)
     {
-        timer->start(300);
+        return;
     }
+
+    ui_fullScreen_set();
+
 }
 
 //计算上下视频是否生效
@@ -585,8 +578,8 @@ void Widget::ui_fullScreen_set()
     ui->label_title->setVisible(fullScreen);
     ui->widget_tab->setVisible(fullScreen);
     ui->widget_menu->setVisible(fullScreen);
-    //ui->widget_operate->setVisible(fullScreen);
-
+    ui->widget_operate->setVisible(fullScreen);
+    ui->widget_video->setCursor(Qt::BlankCursor);//隐藏指针
 
     fullScreen = !fullScreen;
     if(!fullScreen)
@@ -609,4 +602,49 @@ void Widget::ui_fullScreen_set()
         showFullScreen();
     }
     refreshUI(ui->btn_fullScreen);
+}
+
+void Widget::fullScreen_mouseMove_event(QPoint pos)
+{
+    //全屏情况下只要鼠标在移动就显示标题和操作栏,并且刷新timer
+    if(fullScreen)
+    {
+        fullScreen_mousePos = pos;
+        if(fullScreenTimer->isActive())
+        {
+            fullScreenTimer->stop();
+            fullScreenTimer->start(3000);
+        }
+        else
+        {
+            fullScreenTimer->start(3000);
+        }
+        if(!isMoveShow)
+        {
+            ui->label_title->setVisible(fullScreen);
+            ui->widget_operate->setVisible(fullScreen);
+            ui->widget_video->setCursor(Qt::ArrowCursor);
+            isMoveShow = true;
+        }
+    }
+}
+
+void Widget::fullScreen_mouseMoveEnd_event()
+{
+    qDebug()<<"结束鼠标位置："<<fullScreen_mousePos;
+    fullScreenTimer->stop();
+    //若是一段时间内鼠标没动但是在操作栏范围内，则继续刷新timer,或者正在调整进度条
+    QRect com = QRect(0,height-ui->widget_operate->height(),ui->widget_operate->width(),ui->widget_operate->height());  //计算操作栏Rect
+    //qDebug()<<com<<"  "<<fullScreen_mousePos;
+    if(com.contains(fullScreen_mousePos)||m_SliderHover)
+    {
+        fullScreenTimer->start(3000);   //重新计算timer
+    }
+    else
+    {
+        isMoveShow = false;
+        ui->label_title->setVisible(false);
+        ui->widget_operate->setVisible(false);
+        ui->widget_video->setCursor(Qt::BlankCursor);//隐藏指针
+    }
 }

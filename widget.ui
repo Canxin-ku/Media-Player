@@ -25,6 +25,9 @@
     <height>650</height>
    </size>
   </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>Widget</string>
   </property>
@@ -181,7 +184,7 @@
            </font>
           </property>
           <property name="text">
-           <string>title</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -332,6 +335,9 @@
        <height>600</height>
       </size>
      </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
      <layout class="QGridLayout" name="gridLayout">
       <property name="sizeConstraint">
        <enum>QLayout::SetMaximumSize</enum>
@@ -472,7 +478,7 @@
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QWidget" name="widget_video" native="true">
+       <widget class="ClickVideo" name="widget_video" native="true">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -487,6 +493,9 @@
           <width>580</width>
           <height>500</height>
          </size>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -1063,7 +1072,7 @@
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>text</string>
+            <string/>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -1087,7 +1096,6 @@
            <property name="styleSheet">
             <string notr="true">background:transparent;</string>
            </property>
-           <zorder>widget_operate</zorder>
           </widget>
          </item>
         </layout>
@@ -1109,6 +1117,12 @@
    <class>dragMenu</class>
    <extends>QWidget</extends>
    <header location="global">dragmenu.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ClickVideo</class>
+   <extends>QWidget</extends>
+   <header location="global">clickvideo.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
